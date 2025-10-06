@@ -1,0 +1,26 @@
+name: C++ CI Assigment-2
+
+on:
+  push:
+    branches: [Assigment-2]
+  pull_request:
+    branches: [Assigment-2]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ make libgtest-dev libgmock-dev libpthread-stubs0-dev
+
+      - name: Build main executable
+        run: make
+
+      - name: Build and run unit tests
+        run: |
+          g++ -std=c++17 -isystem /usr/include/gtest -pthread gtest.cpp gauss.cpp -lgtest -lgtest_main -o test
+          ./test
