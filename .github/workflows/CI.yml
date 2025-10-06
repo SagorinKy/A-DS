@@ -30,5 +30,6 @@ jobs:
 
       - name: Run bash tests
         run: |
-          chmod +x tests/test_ascii.sh
-          ./tests/test_ascii.sh
+          cd tests
+          chmod +x test_ascii.sh
+          ./test_ascii.sh
