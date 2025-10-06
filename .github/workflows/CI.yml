@@ -1,0 +1,34 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [Assigment-1]
+  pull_request:
+    branches: [Assigment-1]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ python3 libgtest-dev libgmock-dev make
+
+      - name: Build project with Makefile
+        run: make
+
+      - name: Build and run gtest
+        run: |
+          g++ -std=c++17 -g coder.cpp tests/gtest.cpp -lgtest -lgtest_main -pthread -o gtest
+          ./gtest
+
+      - name: Run Python tests
+        run: python3 tests/test.py
+
+      - name: Run bash tests
+        run: |
+          chmod +x tests/test_ascii.sh
+          ./tests/test_ascii.sh
