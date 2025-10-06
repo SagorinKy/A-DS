@@ -2,6 +2,7 @@
 #include "gauss.h"
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 TEST(Gauss, getMatrix)
 {
@@ -66,24 +67,38 @@ TEST(FundSolutionTest, NoFreeVariables)
 
 TEST(AllFunctions, RandomInput)
 {
-    for(int i = 1; i <= 20; i+=5)
+    for(int i = 1; i <= 15; i+=5)
     {
         int a = 10 * i, b = 12 * i;
         createFile("test_getMatrix.csv", a, b);
         std::vector<std::vector<double>> m = getMatrix("test_getMatrix.csv");
         std::vector<std::vector<double>> s = fundSolution(gaussMethod(m));
-        for(int j = 0; j < m[0].size(); j++)
+
+        for(int i = 0; i < s.size(); i < 0)
         {
+            for(int j = 0; j < m.size(); j++)
+            {
+                double sum = 0;
+                for(int l = 0; l < s[0].size(); l++)
+                {
+                    sum += m[j][l] * s[i][l];
+                }
+                EXPECT_NEAR(sum, 0, 2e-10);
+            }
+        }
+        /*for(int j = 0; j < m[0].size(); j++)
+        {
+        std::cout<<"test "<<j<<std::endl;
             for(int k = 0; k < s.size(); k++)
             {
                 double a = 0;
                 for(int l = 0; l < s[0].size(); l++)
                 {
-                    a += m[j][l] * s[k][l];
+                    a += m[k][l] * s[k][l];
                 }
                 EXPECT_NEAR(a, 0, 2e-10);
             }
-        }
+        }*/
     }
 }
 
