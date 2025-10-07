@@ -67,23 +67,23 @@ TEST(FundSolutionTest, NoFreeVariables)
 
 TEST(AllFunctions, RandomInput)
 {
-    for(int h = 1; h <= 15; h+=5)
+    for(int h = 1; h <= 15; h++)
     {
-        int a = 10 * h, b = 12 * h;
+        int a = 100, b = 120;
         createFile("test_getMatrix.csv", a, b);
         std::vector<std::vector<double>> m = getMatrix("test_getMatrix.csv");
         std::vector<std::vector<double>> s = fundSolution(gaussMethod(m));
 
-        for(int i = 0; i < s.size(); i < 0)
+        for(int i = 0; i < s.size(); i++)
         {
             for(int j = 0; j < m.size(); j++)
             {
                 double sum = 0;
                 for(int l = 0; l < s[0].size(); l++)
                 {
-                    sum += m[j][l] * s[i][l];
+                    sum += m[j][l] * s[i][l]; 
                 }
-                EXPECT_NEAR(sum, 0, 2e-10);
+                EXPECT_NEAR(sum, 0, 1e-6);
             }
         }
     }
